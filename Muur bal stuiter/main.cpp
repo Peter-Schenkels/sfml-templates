@@ -56,10 +56,10 @@ int main( int argc, char *argv[] ){
 
 	sf::RenderWindow window{ sf::VideoMode{ 1200, 700 }, "SFML window" };
 	ball myBall{ { 320.0, 240.0 }};
-	wall leftWall {{ 20.0, 20.0 }, 20.0, 500.0};
-	wall rightWall {{ 500.0, 20.0 }, 20.0, 500.0};
-	wall topWall {{ 20.0, 20.0 }, 1000.0, 30.0};
-	wall bottomWall {{ 20.0, 500.0 }, 1000.0, 30.0};
+	wall leftWall {{ 30.0, 30.0 }, 30.0, 500.0};
+	wall rightWall {{ 1000.0 , 30.0 }, 30.0, 500.0};
+	wall topWall {{ 30.0, 30.0 }, 1000.0, 30.0};
+	wall bottomWall {{ 30.0, 500.0 }, 1000.0, 30.0};
 	window.setFramerateLimit(120);
 
 	action actions[] = {
