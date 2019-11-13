@@ -2,6 +2,8 @@
 #include <functional>
 #include <SFML/Graphics.hpp>
 #include "ball.hpp"
+#include "box.hpp"
+
 
 class action {
 private:
