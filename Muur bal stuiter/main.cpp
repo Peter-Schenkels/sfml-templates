@@ -56,17 +56,18 @@ int main( int argc, char *argv[] ){
 
 	sf::RenderWindow window{ sf::VideoMode{ 1200, 700 }, "SFML window" };
 	ball myBall{ { 320.0, 240.0 }};
-	wall leftWall {{ 30.0, 30.0 }, 30.0, 500.0};
-	wall rightWall {{ 1000.0 , 30.0 }, 30.0, 500.0};
-	wall topWall {{ 30.0, 30.0 }, 1000.0, 30.0};
-	wall bottomWall {{ 30.0, 500.0 }, 1000.0, 30.0};
+	wall leftWall {{ 30.0, 30.0 }, 30.0, 400};
+	wall rightWall {{ 400.0 , 30.0 }, 30.0, 400};
+	wall topWall {{ 30.0, 30.0 }, 400.0, 30.0};
+	wall bottomWall {{ 30.0, 400 }, 400.0, 30.0};
+	box room{leftWall, rightWall, topWall, bottomWall};
 	window.setFramerateLimit(120);
 
 	action actions[] = {
-		action( sf::Keyboard::Left,  [&](){ myBall.move( sf::Vector2f( -1.0,  0.0 )); }),
-		action( sf::Keyboard::Right, [&](){ myBall.move( sf::Vector2f( +1.0,  0.0 )); }),
-		action( sf::Keyboard::Up,    [&](){ myBall.move( sf::Vector2f(  0.0, -1.0 )); }),
-		action( sf::Keyboard::Down,  [&](){ myBall.move( sf::Vector2f(  0.0, +1.0 )); }),
+		action( sf::Keyboard::Left,  [&](){ room.move( sf::Vector2f( -1.0,  0.0 )); }),
+		action( sf::Keyboard::Right, [&](){ room.move( sf::Vector2f( +1.0,  0.0 )); }),
+		action( sf::Keyboard::Up,    [&](){ room.move( sf::Vector2f(  0.0, -1.0 )); }),
+		action( sf::Keyboard::Down,  [&](){ room.move( sf::Vector2f(  0.0, +1.0 )); }),
 		action(						 [&](){ myBall.move(myBall.speed); }),
 		action( sf::Mouse::Left,     [&](){ myBall.jump( sf::Mouse::getPosition( window )); })
 	};
@@ -78,16 +79,11 @@ int main( int argc, char *argv[] ){
 
 		window.clear();
 		myBall.draw(window);
-		leftWall.draw(window);
-		rightWall.draw(window);
-		topWall.draw(window);
-		bottomWall.draw(window);
-
 		myBall.intersect(leftWall.getHitbox().getOuterbounds());
 		myBall.intersect(rightWall.getHitbox().getOuterbounds());
 		myBall.intersect(topWall.getHitbox().getOuterbounds());
 		myBall.intersect(bottomWall.getHitbox().getOuterbounds());
-
+		room.draw(window);
 		window.display();
 
 

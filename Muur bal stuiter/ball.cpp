@@ -55,7 +55,6 @@ wall::wall(sf::Vector2f position, float height, float width):
 	object(height, width, position)
 {}
 
-// void rectangle::intersect(object collider){};
 void wall::draw(sf::RenderWindow & window ) const{
 	sf::RectangleShape rectangle;
 	rectangle.setSize({height, width});
