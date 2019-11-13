@@ -49,20 +49,26 @@ public:
 	}
 };
 
+
+
 int main( int argc, char *argv[] ){
 	std::cout << "Starting application 01-05 array of actions\n";
 
-	sf::RenderWindow window{ sf::VideoMode{ 640, 480 }, "SFML window" };
-	ball my_ball{ sf::Vector2f{ 320.0, 240.0 }};
-	window.setFramerateLimit(60);
+	sf::RenderWindow window{ sf::VideoMode{ 1200, 700 }, "SFML window" };
+	ball myBall{ { 320.0, 240.0 }};
+	wall leftWall {{ 20.0, 20.0 }, 20.0, 500.0};
+	wall rightWall {{ 500.0, 20.0 }, 20.0, 500.0};
+	wall topWall {{ 20.0, 20.0 }, 1000.0, 30.0};
+	wall bottomWall {{ 20.0, 500.0 }, 1000.0, 30.0};
+	window.setFramerateLimit(120);
 
 	action actions[] = {
-		action( sf::Keyboard::Left,  [&](){ my_ball.move( sf::Vector2f( -1.0,  0.0 )); }),
-		action( sf::Keyboard::Right, [&](){ my_ball.move( sf::Vector2f( +1.0,  0.0 )); }),
-		action( sf::Keyboard::Up,    [&](){ my_ball.move( sf::Vector2f(  0.0, -1.0 )); }),
-		action( sf::Keyboard::Down,  [&](){ my_ball.move( sf::Vector2f(  0.0, +1.0 )); }),
-		action(						 [&](){ my_ball.move(sf::Vector2f(  1.0, 1.0 )); }),
-		action( sf::Mouse::Left,     [&](){ my_ball.jump( sf::Mouse::getPosition( window )); })
+		action( sf::Keyboard::Left,  [&](){ myBall.move( sf::Vector2f( -1.0,  0.0 )); }),
+		action( sf::Keyboard::Right, [&](){ myBall.move( sf::Vector2f( +1.0,  0.0 )); }),
+		action( sf::Keyboard::Up,    [&](){ myBall.move( sf::Vector2f(  0.0, -1.0 )); }),
+		action( sf::Keyboard::Down,  [&](){ myBall.move( sf::Vector2f(  0.0, +1.0 )); }),
+		action(						 [&](){ myBall.move(myBall.speed); }),
+		action( sf::Mouse::Left,     [&](){ myBall.jump( sf::Mouse::getPosition( window )); })
 	};
 
 	while (window.isOpen()) {
@@ -71,10 +77,20 @@ int main( int argc, char *argv[] ){
 		}
 
 		window.clear();
-		my_ball.draw( window );
+		myBall.draw(window);
+		leftWall.draw(window);
+		rightWall.draw(window);
+		topWall.draw(window);
+		bottomWall.draw(window);
+
+		myBall.intersect(leftWall.getHitbox().getOuterbounds());
+		myBall.intersect(rightWall.getHitbox().getOuterbounds());
+		myBall.intersect(topWall.getHitbox().getOuterbounds());
+		myBall.intersect(bottomWall.getHitbox().getOuterbounds());
+
 		window.display();
 
-		sf::sleep( sf::milliseconds( 20 ));
+
 
         sf::Event event;		
 	    while( window.pollEvent(event) ){
