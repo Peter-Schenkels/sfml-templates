@@ -64,7 +64,7 @@ int main( int argc, char *argv[] ){
 	wall bottomWall {{ 30.0, 600 }, 1000, 30.0};
 	wall doos{{30, 30}, 100, 100};
 	box room{leftWall, rightWall, topWall, bottomWall};
-	window.setFramerateLimit(120);
+	window.setFramerateLimit(240);
 
 	action actions[] = {
 		action( sf::Keyboard::Left,  [&](){ doos.move( sf::Vector2f( -1.0,  0.0 )); }),

@@ -10,7 +10,7 @@ private:
 	float size;
 	
 public:
-	sf::Vector2f speed{10, 4};
+	sf::Vector2f speed{1.2, 1.3};
 
 	ball( sf::Vector2f position, float size = 30.0 );
 
