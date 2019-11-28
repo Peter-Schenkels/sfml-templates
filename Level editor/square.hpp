@@ -13,7 +13,7 @@ private:
 
 public:
     Square(sf::Vector2f size, sf::Vector2f position):
-        object(height, width, position),
+        object(size, position, body),
         body(size)
     
     

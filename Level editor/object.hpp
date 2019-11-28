@@ -6,15 +6,21 @@
 class object {
 
 protected:
-	float height, width;
+	sf::Vector2f size;
 	sf::Vector2f position;
+	
 
 public:
+	sf::Shape & shape;
+	
 	object();
 
-	object(float height, float width, sf::Vector2f & position);
+	object(sf::Vector2f & size, sf::Vector2f & position, sf::Shape &shape);
 
 	virtual void draw();
+
+	sf::Vector2f getSize() { return size; }
+	sf::Vector2f getPosition() { return position; }
 
 
 };

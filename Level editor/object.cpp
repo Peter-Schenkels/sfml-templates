@@ -1,14 +1,13 @@
 #include "object.hpp"
 
-object::object(float height, float width, sf::Vector2f & position):
-		height(height),
-		width(width),
-		position(position)
-		
+object::object(sf::Vector2f & size, sf::Vector2f & position, sf::Shape &shape):
+		size(size),
+		position(position),
+		shape(shape)
 	{}
+	
 
 object::object():
-		height(0),
-		width(0),
+		size(sf::Vector2f{0,0})
 		position(sf::Vector2f{0,0})
 	{}
