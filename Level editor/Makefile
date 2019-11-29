@@ -9,10 +9,10 @@
 #############################################################################
 
 # source files in this project (main.cpp is automatically assumed)
-SOURCES := ball.cpp box.cpp wall.cpp object.cpp hitbox.cpp
+SOURCES := object.cpp game.cpp
 
 # header files in this project
-HEADERS := ball.hpp box.hpp wall.hpp object.hpp hitbox.hpp
+HEADERS := object.hpp game.hpp
 
 # other places to look for files for this project
 SEARCH  := 

@@ -1,11 +1,14 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
+#include <fstream>
 #include "object.hpp"
 
 #ifndef GAME
 #define GAME
 
 #define MAXOBJECTS 100
+#define WINDOWX 640
+#define WINDOWY 420
 
 
 class unknown_color : public std::exception {
@@ -42,7 +45,6 @@ std::ifstream & operator>>(std::ifstream & input, sf::Vector2f & rhs){
     std::string yPos;
     bool comma = false;
     input >> position;
-    unsigned int index;
     for (auto chr : position){
         if (chr == ','){
             comma = true;
@@ -66,64 +68,107 @@ std::ifstream & operator>>(std::ifstream & input, sf::Vector2f & rhs){
     return input;
 }
 
+void add(){
 
-class objectStorage {
+}
 
-private:
-    unsigned int storagePointer = 0;
-    std::unique_ptr<object*> storage[MAXOBJECTS];
+
+
+
+class ObjectContainer {
+
+    object * container[MAXOBJECTS];
+    unsigned int containerPointer = 0;
+
 
 public:
-    objectStorage(){}
+    ObjectContainer(){}
 
-void addObject(object* newObject){
-    storage[storagePointer] = new object{
-    storagePointer++;
+    void addObject( 
+        std::string type,
+        sf::Vector2f size,
+        sf::Vector2f position,
+        std::string name,
+        sf::Color color
+    )
+    {
+        if (type == "Rectangle"){
+            container[containerPointer] = new Rectangle(size, position, name, color);
+            containerPointer++;
+        } 
+        else if (type == "Circle"){
+            container[containerPointer] = new Circle(size.x, position, name, color);
+            containerPointer++;
+        }
+    }
+    
+    void update(){
+        for(auto item : container){
+            item->update();
+        }
+    }
 
-}
+    void draw(sf::RenderWindow & window){
+        for(auto item : container){
+            item->draw(window);
+        }
+    }
 
-
-
-
-
-
-
-}
+};
 
 
 
 class Game {
 
-
-
-private:
-
-    sf::RenderWindow window( sf::VideoMode( 1200, 700 ), "SFML window" );
-    std::ofstream outfile("save.jrkl");
-    object objects *[MAXOBJECTS];
-    unsigned int numberOfActiveObjects = 0;
+    std::ifstream file;
+    sf::RenderWindow window = sf::RenderWindow{sf::VideoMode{WINDOWX, WINDOWY}, "window"};
+    ObjectContainer container;
 
 public:
     Game(){
-        
+        load();
     }
 
-    void init();
 
-    void main();
+    void load() {
+        file.open("jerkel.jrkl");
 
-    void update();
+        if(!(file.is_open())){
+            std::cout << "file not found\n";
+            std::ofstream newFile;
+            newFile.open("jerkel.jrkl");
+            newFile.close();
+            file.open("jerkel.jrkl");
+        }
 
-    void draw();
+        std::string type;
+        sf::Vector2f size;
+        std::string name;
+        sf::Vector2f position;
+        sf::Color color = sf::Color::Blue;
+
+        while (name != ""){
+            file >> position >> size >> type >> name;
+            container.addObject(type, size, position, name, color);
+        }
+
+    }
 
 
-    void save();
+    void update(){
+        container.update();
+    }
+
+    void draw(){
+        container.draw(window);
+    }
 
 
 
 
 
 };
+
 
 
 #endif
