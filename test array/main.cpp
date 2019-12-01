@@ -57,6 +57,7 @@ int main() {
     Ding * container[100];
     auto bodietjeA= sf::RectangleShape{sf::Vector2f{2.0, 3.0}};
     auto bodietjeB= sf::CircleShape{20};
+    sf::RenderWindow window{ sf::VideoMode{ 1200, 700 }, "SFML window" };
     std::string circle = "cirkonk";
     std::string rectangle = "Doons";
     for(unsigned int i = 0; i < 10; i++){

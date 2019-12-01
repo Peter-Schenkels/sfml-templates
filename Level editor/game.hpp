@@ -2,6 +2,7 @@
 #include <iostream>
 #include <fstream>
 #include "object.hpp"
+#include "actions.hpp"
 
 #ifndef GAME
 #define GAME
@@ -92,6 +93,7 @@ public:
         sf::Color color
     )
     {
+        
         if (type == "Rectangle"){
             container[containerPointer] = new Rectangle(size, position, name, color);
             containerPointer++;
@@ -103,15 +105,63 @@ public:
     }
     
     void update(){
+        unsigned int itemNr = 0;
+
         for(auto item : container){
+            if(itemNr == containerPointer){
+                break;
+            }
             item->update();
+            itemNr++;
         }
     }
 
     void draw(sf::RenderWindow & window){
+        unsigned int itemNr = 0;
         for(auto item : container){
+            
+            
+
+            if(itemNr == containerPointer){
+                break;
+            }
+            window.draw( item->getBody());
             item->draw(window);
+            itemNr++;
         }
+    }
+
+    void mouseMove(sf::Vector2i mousePosition){
+
+        sf::Vector2f newMousePosition = static_cast<sf::Vector2f>(mousePosition);
+        unsigned int itemNr = 0;
+     
+        for(auto object : container){
+            
+            if(itemNr == containerPointer){
+                break;
+            }
+            object->mouseMove(newMousePosition);
+            itemNr++;
+        }
+       
+    }
+
+    std::string exportString(){
+
+        unsigned int itemNr = 0;
+        std::string exportString;
+        for(auto object : container){
+            
+            if(itemNr == containerPointer){
+                break;
+            }
+            exportString += object->exportString();
+            exportString += "\n";
+            itemNr++;
+        }
+        return exportString += "0";
+        
     }
 
 };
@@ -121,11 +171,19 @@ public:
 class Game {
 
     std::ifstream file;
-    sf::RenderWindow window = sf::RenderWindow{sf::VideoMode{WINDOWX, WINDOWY}, "window"};
+    sf::RenderWindow & window;
     ObjectContainer container;
 
+        
+    action actions[1] = {
+		action( sf::Mouse::Left, [&](){ container.mouseMove(sf::Mouse::getPosition( window )); })
+
+	};
+
 public:
-    Game(){
+    Game(sf::RenderWindow & window):
+        window(window)
+    {
         load();
     }
 
@@ -142,16 +200,32 @@ public:
         }
 
         std::string type;
+        std::string jinkel;
         sf::Vector2f size;
-        std::string name;
+        std::string name = "";
         sf::Vector2f position;
-        sf::Color color = sf::Color::Blue;
-
-        while (name != ""){
-            file >> position >> size >> type >> name;
+        sf::Color color = sf::Color::White;
+        std::string jerkels;
+        file >> jinkel; 
+        while (jinkel == "1"){
+            
+            file >> position >> size >> type >> name >> jerkels;
+            file >> jinkel; 
             container.addObject(type, size, position, name, color);
-        }
 
+        }
+        
+    
+
+    }
+
+    void main(){
+        
+        for (auto action : actions){
+            action();
+        }
+        update();
+        draw();
     }
 
 
@@ -160,7 +234,25 @@ public:
     }
 
     void draw(){
+        window.clear();
         container.draw(window);
+        window.display();
+    }
+
+    void save(){
+
+
+        std::ofstream file;
+
+        file.open("jerkel.jrkl");
+
+        if(!file.is_open()){
+            std::cerr << "Unable to openfile in save \n";
+        } else {
+            file << container.exportString();
+        }
+        file.close();
+        
     }
 
 

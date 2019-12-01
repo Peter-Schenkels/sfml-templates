@@ -16,15 +16,26 @@ public:
 	object(sf::Vector2f & position, std::string name):
 		position(position),
 		name(name)
-	{}
+	{
+		
+	}
 
 	sf::Vector2f getPosition() { return position; }
 
-	virtual void setColor(const sf::Color color);
+	virtual void setColor(const sf::Color color) = 0;
 
-	virtual void update();
+	virtual void update() = 0;
 
-	virtual void draw(sf::RenderWindow & window);
+	virtual void draw(sf::RenderWindow & window) = 0;
+
+	virtual	void mouseMove( sf::Vector2f mousePosition ) = 0;
+
+	virtual std::string exportString() = 0;
+
+	void move(sf::Vector2f pPosition){ position = pPosition; }
+
+
+	virtual sf::CircleShape getBody() = 0;
 
 	std::string getName() { return name; }
 };
@@ -57,8 +68,33 @@ public:
 		body.setPosition(position);
 	}
 
-	void draw(sf::RenderWindow & window){
+	void draw(sf::RenderWindow & window) override{
 		window.draw(body);
+	}
+
+	std::string exportString() override{
+		std::string exportStr = "1 (" +
+		std::to_string(position.x) + "," +
+		std::to_string(position.y) + ") (" +
+		std::to_string(size.x) + "," +
+		std::to_string(size.y) + ") Rectangle " +
+		name + " white";
+
+		return exportStr;
+	}
+
+    void mouseMove( sf::Vector2f mousePosition ) override{
+		if (body.getGlobalBounds().contains(mousePosition)){
+				move(sf::Vector2f(
+			mousePosition.x - 25,
+			mousePosition.y - 25
+			)
+			);
+		}
+	}
+
+	sf::CircleShape getBody() override {
+		return sf::CircleShape{10};
 	}
 
 };
@@ -76,11 +112,11 @@ private:
 public:
     Circle(float radius, sf::Vector2f position, std::string name, sf::Color color):
         object(position, name),
+		radius(radius),
         body(radius),
 		color(color)
     {
 		update();
-		setColor(color);
 	}
 
 	void setColor(const sf::Color color) override {
@@ -91,8 +127,34 @@ public:
 		body.setPosition(position);
 	}
 
-	void draw(sf::RenderWindow & window){
+	void draw(sf::RenderWindow & window) override{
 		window.draw(body);
+	}
+
+	void mouseMove( sf::Vector2f mousePosition) override{
+		if (body.getGlobalBounds().contains(mousePosition)){
+			move(sf::Vector2f(
+				mousePosition.x - radius,
+				mousePosition.y - radius
+				)
+				);
+		}
+	}
+
+	std::string exportString() override{
+		std::string exportStr = "1 (" +
+		std::to_string(position.x) + "," +
+		std::to_string(position.y) + ") (" +
+		std::to_string(radius) + "," +
+		std::to_string(radius) + ") Circle " +
+		name + " white";
+
+		return exportStr;
+	}
+
+
+	sf::CircleShape getBody() override {
+		return body;
 	}
 
 };
