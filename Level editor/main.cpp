@@ -19,11 +19,7 @@ int main() {
                 game.save();
                 window.close();
             }
-            
         }
         game.main();
-    }
-
-
-    std::cout << "done" << std::endl;
+    };
 }

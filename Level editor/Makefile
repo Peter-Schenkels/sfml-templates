@@ -11,7 +11,7 @@
 # source files in this project (main.cpp is automatically assumed)
 SOURCES := 
 # header files in this project
-HEADERS := object.hpp game.hpp
+HEADERS := object.hpp game.hpp Rectangle.hpp Circle.hpp 
 
 # other places to look for files for this project
 SEARCH  := 

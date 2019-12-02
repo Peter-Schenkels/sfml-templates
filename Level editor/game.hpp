@@ -3,6 +3,8 @@
 #include <fstream>
 #include "object.hpp"
 #include "actions.hpp"
+#include "Circle.hpp"
+#include "Rectangle.hpp"
 
 #ifndef GAME
 #define GAME
@@ -131,7 +133,7 @@ public:
         }
     }
 
-    void mouseMove(sf::Vector2i mousePosition){
+    void mouseMove(sf::Vector2i mousePosition, bool & mouseSelection){
 
         sf::Vector2f newMousePosition = static_cast<sf::Vector2f>(mousePosition);
         unsigned int itemNr = 0;
@@ -141,7 +143,7 @@ public:
             if(itemNr == containerPointer){
                 break;
             }
-            object->mouseMove(newMousePosition);
+            object->mouseMove(newMousePosition, mouseSelection);
             itemNr++;
         }
        
@@ -173,10 +175,11 @@ class Game {
     std::ifstream file;
     sf::RenderWindow & window;
     ObjectContainer container;
+    bool mouseSelection = false;
 
         
     action actions[1] = {
-		action( sf::Mouse::Left, [&](){ container.mouseMove(sf::Mouse::getPosition( window )); })
+		action( sf::Mouse::Left, [&](){ container.mouseMove(sf::Mouse::getPosition( window ), mouseSelection); })
 
 	};
 
@@ -223,6 +226,13 @@ public:
         
         for (auto action : actions){
             action();
+        }
+        if (!(sf::Mouse::Left)){
+            mouseSelection = false;
+            std::cout << "los\n";
+        } else {
+            std::cout << "vast\n";
+            mouseSelection = true;
         }
         update();
         draw();
