@@ -17,6 +17,7 @@ private:
 public:
     Rectangle(sf::Vector2f size, sf::Vector2f position, std::string name, sf::Color color):
         object(position, name),
+		size(size),
         body(size),
 		color(color)
     {
@@ -47,24 +48,27 @@ public:
 		return exportStr;
 	}
 
+	void deselect(){
+		selected = false;
+	}
+
     void mouseMove( sf::Vector2f mousePosition, bool & mouseSelection  ) override{
 
-		if (mouseSelection == false){
-			selected = true;
-		}
-
-		if (body.getGlobalBounds().contains(mousePosition) && selected){
-			if (mouseSelection == false){
-				selected = false;
-				std::cout << name << " los bal\n";
-			} else {
-					move(sf::Vector2f(
-				mousePosition.x - 25,
-				mousePosition.y - 25
-				)
-				);
-				std::cout << "vast\n";
+		if (body.getGlobalBounds().contains(mousePosition)){
+			if(mouseSelection == false){
+				selected = true;
+				mouseSelection = true;
 			}
+
+
+			if (selected){
+				move(sf::Vector2f(
+					mousePosition.x - size.x / 2,
+					mousePosition.y - size.y / 2
+					)
+					);
+			}
+
 		}
 	}
 

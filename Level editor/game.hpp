@@ -118,6 +118,18 @@ public:
         }
     }
 
+    void deselect(){
+        unsigned int itemNr = 0;
+
+        for(auto item : container){
+            if(itemNr == containerPointer){
+                break;
+            }
+            item->deselect();
+            itemNr++;
+        }
+    }
+
     void draw(sf::RenderWindow & window){
         unsigned int itemNr = 0;
         for(auto item : container){
@@ -229,11 +241,9 @@ public:
         }
         if (!(sf::Mouse::Left)){
             mouseSelection = false;
-            std::cout << "los\n";
-        } else {
-            std::cout << "vast\n";
-            mouseSelection = true;
-        }
+            container.deselect();
+
+        } 
         update();
         draw();
     }

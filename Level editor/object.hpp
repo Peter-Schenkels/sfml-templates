@@ -26,6 +26,8 @@ public:
 
 	virtual void update() = 0;
 
+	virtual void deselect() = 0;
+
 	virtual void draw(sf::RenderWindow & window) = 0;
 
 	virtual	void mouseMove( sf::Vector2f mousePosition, bool & mouseSelection ) = 0;

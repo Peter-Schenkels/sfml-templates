@@ -34,23 +34,30 @@ public:
 		window.draw(body);
 	}
 
+	void deselect() {
+		selected = false;
+	}
+
 	void mouseMove( sf::Vector2f mousePosition, bool & mouseSelection) override{
 
-		if(mouseSelection == false){
-			selected = true;
-			mouseSelection = true;
-		}
 
-		if (body.getGlobalBounds().contains(mousePosition) && selected){
-			move(sf::Vector2f(
-				mousePosition.x - radius,
-				mousePosition.y - radius
-				)
-				);
 
-			if (mouseSelection == false){
-				selected = false;
+		if (body.getGlobalBounds().contains(mousePosition)){
+			
+			if(mouseSelection == false){
+				selected = true;
+				mouseSelection = true;
 			}
+
+
+			if (selected){
+				move(sf::Vector2f(
+					mousePosition.x - radius,
+					mousePosition.y - radius
+					)
+					);
+			}
+
 		}
 	}
 
