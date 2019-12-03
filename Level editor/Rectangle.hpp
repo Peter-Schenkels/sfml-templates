@@ -10,7 +10,6 @@ private:
 	sf::Vector2f size;
     sf::RectangleShape body;
 	sf::Color color;
-	bool selected = false;
 	
 
 
@@ -48,10 +47,6 @@ public:
 		return exportStr;
 	}
 
-	void deselect(){
-		selected = false;
-	}
-
     void mouseMove( sf::Vector2f mousePosition, bool & mouseSelection  ) override{
 
 		if (body.getGlobalBounds().contains(mousePosition)){
@@ -71,11 +66,7 @@ public:
 
 		}
 	}
-
-	sf::CircleShape getBody() override {
-		return sf::CircleShape{10};
-	}
-
+	
 };
 
 

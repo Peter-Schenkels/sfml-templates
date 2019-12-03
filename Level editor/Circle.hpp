@@ -9,7 +9,6 @@ private:
 	float radius;
     sf::CircleShape body;
 	sf::Color color;
-	bool selected = false;
 
 
 public:
@@ -32,10 +31,6 @@ public:
 
 	void draw(sf::RenderWindow & window) override{
 		window.draw(body);
-	}
-
-	void deselect() {
-		selected = false;
 	}
 
 	void mouseMove( sf::Vector2f mousePosition, bool & mouseSelection) override{
@@ -72,10 +67,6 @@ public:
 		return exportStr;
 	}
 
-
-	sf::CircleShape getBody() override {
-		return body;
-	}
 
 };
 

@@ -10,6 +10,7 @@ protected:
 	
 	sf::Vector2f position = sf::Vector2f{0,0};
 	std::string name;
+	bool selected = false;
 	
 public:
 	
@@ -26,7 +27,7 @@ public:
 
 	virtual void update() = 0;
 
-	virtual void deselect() = 0;
+	void deselect(){ selected = false; }
 
 	virtual void draw(sf::RenderWindow & window) = 0;
 
@@ -35,9 +36,6 @@ public:
 	virtual std::string exportString() = 0;
 
 	void move(sf::Vector2f pPosition){ position = pPosition; }
-
-
-	virtual sf::CircleShape getBody() = 0;
 
 	std::string getName() { return name; }
 };

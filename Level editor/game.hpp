@@ -5,6 +5,7 @@
 #include "actions.hpp"
 #include "Circle.hpp"
 #include "Rectangle.hpp"
+#include "Sprite.hpp"
 
 #ifndef GAME
 #define GAME
@@ -92,18 +93,32 @@ public:
         sf::Vector2f size,
         sf::Vector2f position,
         std::string name,
-        sf::Color color
+        std::string color
     )
     {
-        
-        if (type == "Rectangle"){
-            container[containerPointer] = new Rectangle(size, position, name, color);
-            containerPointer++;
-        } 
-        else if (type == "Circle"){
-            container[containerPointer] = new Circle(size.x, position, name, color);
-            containerPointer++;
+        try {   
+            
+            if (type == "Rectangle"){
+                container[containerPointer] = new Rectangle(size, position, name, sf::Color::White);
+                containerPointer++;
+            } 
+            else if (type == "Circle"){
+                container[containerPointer] = new Circle(size.x, position, name, sf::Color::White);
+                containerPointer++;
+            }
+            else if (type == "Sprite"){
+                container[containerPointer] = new Sprite(position, color, size, name);
+                containerPointer++;
+            }
+            else {
+                throw(type);
+            }
+
         }
+        catch(std::string type){
+            std::cout << "error unable to recognise type: \"" << type << "\"" << std::endl;
+        }
+
     }
     
     void update(){
@@ -139,7 +154,6 @@ public:
             if(itemNr == containerPointer){
                 break;
             }
-            window.draw( item->getBody());
             item->draw(window);
             itemNr++;
         }
@@ -188,6 +202,7 @@ class Game {
     sf::RenderWindow & window;
     ObjectContainer container;
     bool mouseSelection = false;
+    std::string fileLocation = "sav.dat";
 
         
     action actions[1] = {
@@ -204,34 +219,57 @@ public:
 
 
     void load() {
-        file.open("jerkel.jrkl");
-
-        if(!(file.is_open())){
-            std::cout << "file not found\n";
-            std::ofstream newFile;
-            newFile.open("jerkel.jrkl");
-            newFile.close();
-            file.open("jerkel.jrkl");
-        }
-
-        std::string type;
-        std::string jinkel;
-        sf::Vector2f size;
-        std::string name = "";
-        sf::Vector2f position;
-        sf::Color color = sf::Color::White;
-        std::string jerkels;
-        file >> jinkel; 
-        while (jinkel == "1"){
+        try {
             
-            file >> position >> size >> type >> name >> jerkels;
-            file >> jinkel; 
-            container.addObject(type, size, position, name, color);
+            file.open(fileLocation);
+
+            if(!(file.is_open())){
+                throw(fileLocation);
+            }
+
+            std::string type;
+            std::string end;
+            sf::Vector2f size;
+            std::string name = "";
+            sf::Vector2f position;
+            sf::Color color = sf::Color::White;
+            std::string appearance;
+            file >> end; 
+            while (end == "1"){
+                
+                file >> position >> size >> type >> name >> appearance;
+                file >> end; 
+                container.addObject(type, size, position, name, appearance);
+
+            }
+        }
+        catch(std::string fileLocation){
+            std::cerr << "unable to open file: \"" << fileLocation << "\"\nObject loading failed";
+        }
+    
+
+    }
+
+    void save(){
+
+        try { 
+            std::ofstream file;
+
+            file.open(fileLocation);
+
+            if(!file.is_open()){
+                throw(fileLocation);
+            } 
+            
+            file << container.exportString();
+            
+            file.close();
+        }
+        catch (std::string fileLocation){
+            std::cerr << "unable to save to file: \"" << fileLocation << "\"\nObject saving failed";
 
         }
         
-    
-
     }
 
     void main(){
@@ -259,21 +297,6 @@ public:
         window.display();
     }
 
-    void save(){
-
-
-        std::ofstream file;
-
-        file.open("jerkel.jrkl");
-
-        if(!file.is_open()){
-            std::cerr << "Unable to openfile in save \n";
-        } else {
-            file << container.exportString();
-        }
-        file.close();
-        
-    }
 
 
 
