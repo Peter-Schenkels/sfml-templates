@@ -14,12 +14,13 @@ protected:
 	
 public:
 	
-	object(sf::Vector2f & position, std::string name):
+	object(
+		sf::Vector2f & position, 
+		std::string name
+	):
 		position(position),
 		name(name)
-	{
-		
-	}
+	{}
 
 	sf::Vector2f getPosition() { return position; }
 

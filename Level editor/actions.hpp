@@ -1,3 +1,7 @@
+#ifndef ACTIONS_HPP
+#define ACTIONS_HPP
+
+
 #include <iostream>
 #include <functional>
 #include <SFML/Graphics.hpp>
@@ -55,3 +59,6 @@ public:
 		}
 	}
 };
+
+
+#endif

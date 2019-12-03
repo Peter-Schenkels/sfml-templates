@@ -9,9 +9,9 @@
 #############################################################################
 
 # source files in this project (main.cpp is automatically assumed)
-SOURCES := 
+SOURCES := Line.cpp Rectangle.cpp Sprite.cpp ObjectContainer.cpp game.cpp Circle.cpp
 # header files in this project
-HEADERS := object.hpp game.hpp Rectangle.hpp Circle.hpp 
+HEADERS := object.hpp game.hpp Rectangle.hpp Circle.hpp Line.hpp Sprite.hpp actions.hpp ObjectContainer.hpp GameOperators.hpp
 
 # other places to look for files for this project
 SEARCH  := 

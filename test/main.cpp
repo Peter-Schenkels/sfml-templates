@@ -50,6 +50,11 @@ int main()
     balletje balletje1(window);
     balletje balletje2(window);
 
+    sf::VertexArray lines(sf::LinesStrip, 2);
+    lines[0].position = sf::Vector2f(10, 0);
+    lines[1].position = sf::Vector2f(20, 0);
+
+
     balletje2.setPosition(0, 100);
     balletje2.setFillColor(sf::Color::Blue);
     balletje2.speedY = -1;
@@ -65,6 +70,7 @@ int main()
         }
         window.clear();
         updateDrawables(balletjes);
+        window.draw(lines);
         window.display();   
         if(balletje1.getPosition() == balletje2.getPosition()){
             balletje1.speedY *= -1;
