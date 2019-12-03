@@ -26,6 +26,7 @@ public:
 			body(radius),
 			color(color)
 	{
+		setColor(color);
 		update();
 	}
 

@@ -7,25 +7,27 @@ void ObjectContainer::addObject
     sf::Vector2f size,
     sf::Vector2f position,
     std::string name,
-    std::string color
+    sf::Color color,
+    std::string fileLocation
+
 )
 {
     try {   
         
         if (type == "Rectangle"){
-            container[containerPointer] = new Rectangle(size, position, name, sf::Color::White);
+            container[containerPointer] = new Rectangle(size, position, name, color);
             containerPointer++;
         } 
         else if (type == "Circle"){
-            container[containerPointer] = new Circle(size.x, position, name, sf::Color::White);
+            container[containerPointer] = new Circle(size.x, position, name, color);
             containerPointer++;
         }
         else if (type == "Sprite"){
-            container[containerPointer] = new Sprite(position, color, size, name);
+            container[containerPointer] = new Sprite(position, fileLocation, size, name, color);
             containerPointer++;
         }
         else if (type == "Line"){
-            container[containerPointer] = new Line(position, size, name, sf::Color::White);
+            container[containerPointer] = new Line(position, size, name, color);
             containerPointer++;
         }
         else {

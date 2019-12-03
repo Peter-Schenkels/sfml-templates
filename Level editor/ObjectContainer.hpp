@@ -38,7 +38,8 @@ public:
         sf::Vector2f size,
         sf::Vector2f position,
         std::string name,
-        std::string color
+        sf::Color color,
+        std::string fileLocation
     );
 
     void update();

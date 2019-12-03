@@ -13,6 +13,8 @@ Rectangle::Rectangle
         color(color)
 {
     update();
+    setColor(color);
+    
 }
 
 void Rectangle::mouseMove( sf::Vector2f mousePosition, bool & mouseSelection ) {
@@ -43,8 +45,12 @@ std::string Rectangle::exportString() {
     std::to_string(position.x) + "," +
     std::to_string(position.y) + ") (" +
     std::to_string(size.x) + "," +
-    std::to_string(size.y) + ") Rectangle " +
-    name + " white";
+    std::to_string(size.y) + ") Rectangle " + name    
+    + " " + std::to_string(color.r)
+    + "," + std::to_string(color.g) 
+    + ',' + std::to_string(color.b) 
+    + "," + std::to_string(color.a)
+    + " /";
 
     return exportStr;
 

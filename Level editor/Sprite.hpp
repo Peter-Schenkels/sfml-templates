@@ -12,6 +12,7 @@ private:
     sf::Texture texture;
     sf::Sprite body;
     sf::Vector2f size;
+    sf::Color color;
     
 public:
     Sprite
@@ -19,7 +20,8 @@ public:
             sf::Vector2f position, 
             std::string imgLocation,  
             sf::Vector2f sizeFactor,
-            std::string name
+            std::string name,
+            sf::Color color
         );
 
     ~Sprite();

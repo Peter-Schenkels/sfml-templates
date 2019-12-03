@@ -10,7 +10,7 @@ Line::Line(
     end(end),
     color(color)
 {
-
+    setColor(color);
 }
 
 
@@ -38,8 +38,12 @@ std::string Line::exportString() {
 		std::to_string(position.x) + "," +
 		std::to_string(position.y) + ") (" +
 		std::to_string(end.x) + "," +
-		std::to_string(end.y) + ") Line " +
-		name + " white";
+		std::to_string(end.y) + ") Line " + name 
+        + " " + std::to_string(color.r)
+        + "," + std::to_string(color.g) 
+        + ',' + std::to_string(color.b) 
+        + "," + std::to_string(color.a)
+        + " /";
 
 		return exportStr;
 	}

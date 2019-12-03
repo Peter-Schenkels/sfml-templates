@@ -17,14 +17,16 @@ void Game::load(){
         std::string name = "";
         sf::Vector2f position;
         sf::Color color = sf::Color::White;
-        std::string appearance;
+        std::string fileLocation;
         file >> end; 
 
         while (end == "1"){
             
-            file >> position >> size >> type >> name >> appearance;
+            file >> position >> size >> type >> name;
+            file >> color;
+            file >> fileLocation;
             file >> end; 
-            container.addObject(type, size, position, name, appearance);
+            container.addObject(type, size, position, name, color, fileLocation);
 
         }
 
