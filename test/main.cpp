@@ -52,7 +52,8 @@ int main()
 
     sf::VertexArray lines(sf::LinesStrip, 2);
     lines[0].position = sf::Vector2f(10, 0);
-    lines[1].position = sf::Vector2f(20, 0);
+    lines[1].position = sf::Vector2f(500, 500);
+    lines[0].color = {223,122,222,110};
 
 
     balletje2.setPosition(0, 100);
