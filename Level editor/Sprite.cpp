@@ -21,14 +21,9 @@ Sprite::Sprite
     setColor(color);
 }
 
-void Sprite::mouseMove( sf::Vector2f mousePosition, bool & mouseSelection  ) {
+void Sprite::mouseMove( sf::Vector2f mousePosition ) {
 
     if (body.getGlobalBounds().contains(mousePosition)){
-
-        if(mouseSelection == false){
-            selected = true;
-            mouseSelection = true;
-        }
 
         if (selected){
             move(sf::Vector2f(
@@ -40,6 +35,16 @@ void Sprite::mouseMove( sf::Vector2f mousePosition, bool & mouseSelection  ) {
 
     }
 
+}
+
+void Sprite::select(sf::Vector2f mousePosition) {
+    
+    deselect();
+
+    if (body.getGlobalBounds().contains(mousePosition)){
+        selected = true;
+    }
+    
 }
 
 std::string Sprite::exportString() {

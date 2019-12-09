@@ -32,8 +32,9 @@ public:
 
 	std::string exportString() override;
 
-    void mouseMove( sf::Vector2f mousePosition, bool & mouseSelection  ) override;
+    void mouseMove( sf::Vector2f mousePosition ) override;
 
+	void select(sf::Vector2f mousePosition) override;
 
 };
 

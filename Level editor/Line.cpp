@@ -13,14 +13,21 @@ Line::Line(
     setColor(color);
 }
 
+void Line::select(sf::Vector2f mousePosition) {
 
-void Line::mouseMove( sf::Vector2f mousePosition, bool & mouseSelection ){
+    deselect();
+
 
     if (getBody().getBounds().contains(mousePosition)){
-        if(mouseSelection == false){
-            selected = true;
-            mouseSelection = true;
-        }
+        selected = true;
+    }
+    
+}
+
+void Line::mouseMove( sf::Vector2f mousePosition ){
+
+    if (getBody().getBounds().contains(mousePosition)){
+
         if (selected){
             move(sf::Vector2f(
                 mousePosition.x - end.x / 2,
@@ -28,6 +35,7 @@ void Line::mouseMove( sf::Vector2f mousePosition, bool & mouseSelection ){
                 )
             );
         }
+        
     }
 
 }

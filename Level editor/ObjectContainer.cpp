@@ -73,6 +73,23 @@ void ObjectContainer::deselect(){
 
 }
 
+void ObjectContainer::select(sf::Vector2i mousePosition){
+    
+    sf::Vector2f newMousePosition = static_cast<sf::Vector2f>(mousePosition);
+    unsigned int itemNr = 0;
+
+    for(auto item : container){
+        if(itemNr == containerPointer)
+            break;
+        
+        item->select(newMousePosition);
+        itemNr++;
+
+    }
+
+
+}
+
 void ObjectContainer::draw(sf::RenderWindow & window){
 
     unsigned int itemNr = 0;
@@ -89,7 +106,7 @@ void ObjectContainer::draw(sf::RenderWindow & window){
 
 }
 
-void ObjectContainer::mouseMove(sf::Vector2i mousePosition, bool & mouseSelection){
+void ObjectContainer::mouseMove(sf::Vector2i mousePosition){
 
     sf::Vector2f newMousePosition = static_cast<sf::Vector2f>(mousePosition);
     unsigned int itemNr = 0;
@@ -99,7 +116,7 @@ void ObjectContainer::mouseMove(sf::Vector2i mousePosition, bool & mouseSelectio
         if(itemNr == containerPointer)
             break;
         
-        object->mouseMove(newMousePosition, mouseSelection);
+        object->mouseMove(newMousePosition);
         itemNr++;
 
     }

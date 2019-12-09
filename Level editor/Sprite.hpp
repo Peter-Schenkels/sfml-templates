@@ -28,13 +28,15 @@ public:
 
     void loadTexture();
 
+    void select(sf::Vector2f mousePosition) override;
+
 	void setColor(const sf::Color color) override { body.setColor(color); }
 
 	void update() override { body.setPosition(position); }
 
 	void draw(sf::RenderWindow & window) override { window.draw(body); }
 
-    void mouseMove( sf::Vector2f mousePosition, bool & mouseSelection  ) override;
+    void mouseMove( sf::Vector2f mousePosition ) override;
 
 	std::string exportString() override;
 

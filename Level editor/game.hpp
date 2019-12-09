@@ -31,10 +31,11 @@ class Game {
     std::string fileLocation = "sav.dat";
 
         
-    action actions[1] = {
-		action( sf::Mouse::Left, [&](){ container.mouseMove(sf::Mouse::getPosition( window ), mouseSelection); })
-
+    action actions[2] = {
+		action( sf::Mouse::Left, [&](){ container.mouseMove(sf::Mouse::getPosition( window )); }),
+		action( sf::Mouse::Right, [&](){ container.select(sf::Mouse::getPosition( window )); })
 	};
+
 
 public:
     Game(sf::RenderWindow & window):

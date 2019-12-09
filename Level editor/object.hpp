@@ -28,11 +28,13 @@ public:
 
 	virtual void update() = 0;
 
+	virtual void select(sf::Vector2f mousePosition) = 0;
+
 	void deselect(){ selected = false; }
 
 	virtual void draw(sf::RenderWindow & window) = 0;
 
-	virtual	void mouseMove( sf::Vector2f mousePosition, bool & mouseSelection ) = 0;
+	virtual	void mouseMove( sf::Vector2f mousePosition) = 0;
 
 	virtual std::string exportString() = 0;
 

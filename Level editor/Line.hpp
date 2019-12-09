@@ -26,6 +26,8 @@ public:
 
     void setColor(const sf::Color newColor){ color = newColor; };
 
+    void select(sf::Vector2f mousePosition) override;
+
     void update(){}
 
     void updateLength(sf::Vector2f newLength){ end = newLength; }
@@ -34,7 +36,7 @@ public:
 
     void draw(sf::RenderWindow & window){ window.draw(getBody()); }
 
-	void mouseMove( sf::Vector2f mousePosition, bool & mouseSelection );
+	void mouseMove( sf::Vector2f mousePosition );
 
     std::string exportString() override;
 

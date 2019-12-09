@@ -17,14 +17,17 @@ Rectangle::Rectangle
     
 }
 
-void Rectangle::mouseMove( sf::Vector2f mousePosition, bool & mouseSelection ) {
+void Rectangle::select(sf::Vector2f mousePosition) {
+    deselect();
+    if (body.getGlobalBounds().contains(mousePosition)){
+        selected = true;
+    }
+    
+}
+
+void Rectangle::mouseMove( sf::Vector2f mousePosition ) {
 
     if (body.getGlobalBounds().contains(mousePosition)){
-
-        if(mouseSelection == false){
-            selected = true;
-            mouseSelection = true;
-        }
 
         if (selected){
             move(sf::Vector2f

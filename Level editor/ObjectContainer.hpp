@@ -44,11 +44,13 @@ public:
 
     void update();
 
+    void select(sf::Vector2i mousePosition);
+
     void deselect();
 
     void draw(sf::RenderWindow & window);
 
-    void mouseMove(sf::Vector2i mousePosition, bool & mouseSelection);
+    void mouseMove(sf::Vector2i mousePosition);
 
     std::string exportString();
 

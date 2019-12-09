@@ -68,11 +68,6 @@ void Game::main(){
         action();
     }
 
-    if (!(sf::Mouse::Left)){
-        mouseSelection = false;
-        container.deselect();
-    } 
-
     update();
     draw();
 
