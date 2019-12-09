@@ -44,7 +44,7 @@ void Rectangle::mouseMove( sf::Vector2f mousePosition ) {
 
 std::string Rectangle::exportString() {
 
-    std::string exportStr = "1 (" +
+    std::string exportStr = "/ (" +
     std::to_string(position.x) + "," +
     std::to_string(position.y) + ") (" +
     std::to_string(size.x) + "," +

@@ -10,7 +10,6 @@ void Game::load(){
         if(!(file.is_open()))
             throw(fileLocation);
         
-
         std::string type;
         std::string end;
         sf::Vector2f size;
@@ -20,9 +19,12 @@ void Game::load(){
         std::string fileLocation;
         file >> end; 
 
-        while (end == "1"){
+        while (end == "/"){
             
-            file >> position >> size >> type >> name;
+            file >> position;
+            file >> size;
+            file >> type;
+            file >> name;
             file >> color;
             file >> fileLocation;
             file >> end; 

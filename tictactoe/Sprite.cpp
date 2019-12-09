@@ -5,9 +5,9 @@ Sprite::Sprite
     (
         sf::Vector2f position, 
         std::string imgLocation,  
-        sf::Vector2f sizeFactor,
-        std::string name,
-        sf::Color color
+        sf::Vector2f sizeFactor = {1,1},
+        std::string name = "Sprite",
+        sf::Color color = {255,255,255,255}
     ):
         object(position, name),
         imgLocation(imgLocation),

@@ -24,7 +24,6 @@ public:
             sf::Color color
         );
 
-    ~Sprite();
 
     void loadTexture();
 

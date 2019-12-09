@@ -49,7 +49,7 @@ void Sprite::select(sf::Vector2f mousePosition) {
 
 std::string Sprite::exportString() {
 
-    std::string exportStr = "1 (" +
+    std::string exportStr = "/ (" +
     std::to_string(position.x) + "," +
     std::to_string(position.y) + ") (" +
     std::to_string(sizeFactor.x) + "," +
