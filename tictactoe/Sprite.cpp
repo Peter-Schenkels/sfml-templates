@@ -3,8 +3,8 @@
 
 Sprite::Sprite
     (
-        sf::Vector2f position, 
-        std::string imgLocation,  
+        sf::Vector2f position = {0,0}, 
+        std::string imgLocation = "/",  
         sf::Vector2f sizeFactor = {1,1},
         std::string name = "Sprite",
         sf::Color color = {255,255,255,255}
@@ -14,12 +14,15 @@ Sprite::Sprite
         sizeFactor(sizeFactor),
         color(color)
 {
-    loadTexture();
+    if (imgLocation != std::string("/"))
+        loadTexture();
     body.setScale(sizeFactor);
     size.x = body.getLocalBounds().width;
     size.y = body.getLocalBounds().height;
     setColor(color);
 }
+
+
 
 void Sprite::mouseMove( sf::Vector2f mousePosition, bool & mouseSelection  ) {
 
@@ -74,6 +77,26 @@ void Sprite::loadTexture(){
     catch(std::string e){
 
         std::cout << "Unable to load texture: " << imgLocation << " to " << name << std::endl;
+
+    }
+
+}
+
+void Sprite::loadTexture(std::string newImageLocation){
+
+    try{
+
+        if(!texture.loadFromFile(newImageLocation)){
+            throw(newImageLocation);
+        }
+
+        body.setTexture(texture);
+
+    }
+
+    catch(std::string e){
+
+        std::cout << "Unable to load texture: " << e << " to " << name << std::endl;
 
     }
 

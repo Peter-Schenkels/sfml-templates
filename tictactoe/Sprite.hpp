@@ -15,6 +15,18 @@ private:
     sf::Color color;
     
 public:
+
+    Sprite()
+    {
+
+        sf::Vector2f position = {0,0};
+        std::string imgLocation = "/";  
+        sf::Vector2f sizeFactor = {1,1};
+        std::string name = "Sprite";
+        sf::Color color = {255,255,255,255};
+
+    }
+
     Sprite
         (
             sf::Vector2f position, 
@@ -23,9 +35,11 @@ public:
             std::string name,
             sf::Color color
         );
-
+    
 
     void loadTexture();
+
+    void loadTexture(std::string newImageLocation);
 
 	void setColor(const sf::Color color) override { body.setColor(color); }
 
@@ -37,6 +51,7 @@ public:
 
 	std::string exportString() override;
 
+    void setScale(sf::Vector2f scale) {body.setScale(scale); }
 
 
 };

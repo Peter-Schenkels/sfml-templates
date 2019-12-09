@@ -8,12 +8,12 @@
 
 struct Move {
 
-    char player;
+    bool player;
     sf::Vector2i position;
     
 
 
-    Move(char player = ' ', sf::Vector2i position = {4,4}):
+    Move(bool player = 0, sf::Vector2i position = {4,4}):
         player(player),
         position(position)
     {}
@@ -24,8 +24,8 @@ struct Move {
 
 class ObjectContainer {
 
-    object * container[9];
-    int objectPointer = 0;
+    int objectPointer = -1;
+    Sprite container[9]= {};
     sf::RenderWindow & window;
 
 
@@ -35,36 +35,75 @@ public:
         window(window)
     {}
 
-    void addObject(sf::Vector2f position, bool turn){
-        int offset = 500 / 3;
-        position.x *= offset;
-        position.y *= offset;
+    void setPointer(int newPoint){
 
-        if (turn){
-            container[objectPointer] = new Sprite(position, "img/cross.png", {0.1,0.1}, "Cross", sf::Color::White );
-            objectPointer++;
-        } else {
-            container[objectPointer] = new Sprite(position, "img/circle.png", {0.1,0.1}, "Circle", sf::Color::White );
-            objectPointer++;
+
+        if (newPoint > 8 or newPoint < 0){
+            std::cout << "invalid pointer set" << std::endl;
         }
 
+        objectPointer = newPoint;
 
     }
 
-    void draw(){
-        
+    int getObjectPointer() { return objectPointer; }
+
+    void draw(std::vector<Move> & moves, int movesPointer){
+
         int counter = 0;
         
-        for (auto item : container){
-            if (counter == objectPointer)
-                break;
-            item->draw(window);
+        for (auto item : moves){
+
+
+            if (counter == movesPointer) break;
+                ///
+            if(item.player){
+                container[counter].loadTexture("img/circle.png");
+                container[counter].setScale({0.45,0.45});
+                container[counter].move
+                ({
+                    float(item.position.x * (500 / 3) - 70),
+                    float(item.position.y * (500 / 3) - 70)
+                });
+            } else {
+                container[counter].loadTexture("img/cross.png");
+                container[counter].setScale({0.15,0.15});
+                container[counter].move
+                ({
+                    float(item.position.x * (500 / 3)),
+                    float(item.position.y * (500 / 3))
+                });
+            }
+
+            
+            
+            container[counter].update();
+            ///
+            container[counter].draw(window);
             counter++;
         }
 
     }
 
 };
+
+
+bool checkAvailable(std::vector<Move> list, Move value){
+
+    if(list.empty()) return 1;
+
+    int counter = 0;
+    int size = list.size() - 1;
+    for(Move item : list){
+        if (counter == size) return 1;
+        if (item.position == value.position) return 0;
+    }
+
+    return 1;
+
+}
+
+
 
 class Game {
 
@@ -73,7 +112,7 @@ private:
     sf::RenderWindow & window;
     sf::RectangleShape background;
     Sprite field = {sf::Vector2f(0,0), std::string("img/bord.png"), {0.65,0.60}, "Bord", {255,255,255,255}};
-    Move moves[9];
+    std::vector<Move> moves;
     int movesPointer = 0;
     ObjectContainer container;
     bool turn = 0;
@@ -95,65 +134,77 @@ public:
 
         draw();
         makeTurn();
-        std::cout << "hey" << std::endl;
         checkwin();
         update();
 
     };
 
     void draw(){
+        window.clear();
         window.draw(background);
         field.draw(window);
-        container.draw();
+        container.draw(moves, movesPointer);
         window.display();
+
 
 
 
     };
 
-    void update(){};
+    void update(){
+        if(sf::Keyboard::isKeyPressed(sf::Keyboard::Left)){
+            if(movesPointer != 0){
+                movesPointer--;
+                moves.pop_back();
+
+                if (moves.back().player){
+                    turn = 0;
+                } else {
+                    turn = 1;
+                }
+                while(sf::Keyboard::isKeyPressed(sf::Keyboard::Left));
+            }
+        }
+    };
 
     void checkwin(){}
 
     void makeTurn(){
-        /// X = 0, O = 1
-        if (!turn) {
-            while (!turn){
-                if (sf::Mouse::isButtonPressed(sf::Mouse::Left)){
-        std::cout << "start" << std::endl;
-   
-                    addMove();
-                }
-            }
+        if (sf::Mouse::isButtonPressed(sf::Mouse::Left)){
+            addMove();
+            while(sf::Mouse::isButtonPressed(sf::Mouse::Left));
         }
-        else if (turn) {
-            while (turn){
-                if (sf::Mouse::isButtonPressed(sf::Mouse::Left)){
-                    addMove();
-                }
-            }
-            
-        } else {
-            std::cout << "GameOver" << std::endl;
-        }
-
-
+    
+        
     }
 
-    void addMove(){
-        sf::Vector2i position = sf::Mouse::getPosition() / 3;
+ void addMove(){
 
-        if (position.x < 3 or position.y < 3){
+        sf::Vector2i position = sf::Mouse::getPosition() / 162;
 
-            moves[movesPointer] = Move{turn, position};
-            sf::Vector2f newPosition = {float(position.x), float(position.y)};
-            container.addObject(newPosition, turn);
-            if(turn)turn = 0;
-            else turn = 1;
-            std::cout << "huheuehue" << std::endl;
+
+        if (position.x < 3 && position.y < 3){
+
+            Move newMove = {turn, position};
+
+            if (checkAvailable(moves, newMove)){
+
+                movesPointer++;
+                moves.push_back(newMove);
+
+            }
+
+            if(turn){
+                turn = 0;
+            } else {
+                turn = 1;
+            }
+
+
 
         }
-        
+
+
     }
 
 

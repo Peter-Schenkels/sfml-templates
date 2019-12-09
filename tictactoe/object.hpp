@@ -13,6 +13,10 @@ protected:
 	bool selected = false;
 	
 public:
+
+	object(){
+		name = "empty";
+	}
 	
 	object(
 		sf::Vector2f & position, 
