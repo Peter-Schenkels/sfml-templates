@@ -9,7 +9,7 @@
 #############################################################################
 
 # source files in this project (main.cpp is automatically assumed)
-SOURCES :=  Sprite.cpp
+SOURCES := Sprite.cpp
 # header files in this project
 HEADERS := object.hpp Sprite.hpp 
 
