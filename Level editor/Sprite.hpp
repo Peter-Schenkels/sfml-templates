@@ -15,7 +15,7 @@ private:
     sf::Color color;
     
 public:
-    Sprite
+    Sp-+rite
         (
             sf::Vector2f position, 
             std::string imgLocation,  

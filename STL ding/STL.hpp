@@ -79,13 +79,11 @@ typedef std::pair<std::string,int> pair;
 void countAndPrintWords(std::ifstream & file){
     
     std::string s;
-    std::map<std::string, int> counters; // store each word and an associated counter
+    std::map<std::string, int> counters; 
     
-    // read the input, keeping track of each word and how often we see it
     while (file >> s)
         ++counters[s];
-    
-    // write the words and associated counts
+
     std::vector<std::pair<std::string,int>> vec;
     std::copy(
             counters.begin(), 

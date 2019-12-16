@@ -87,10 +87,11 @@ public:
 
 bool checkAvailable(std::vector<Move> list, Move value){
 
-    if(list.empty()) return 1;
-
+    if(list.empty()){
+        return 1;
+    }
     int counter = 0;
-    int size = list.size() - 1;
+    int size = list.size();
     for(Move item : list){
         if (counter == size) return 1;
         if (item.position == value.position) return 0;
@@ -267,13 +268,14 @@ public:
                 movesPointer++;
                 moves.push_back(newMove);
 
+                if(turn){
+                    turn = 0;
+                } else {
+                    turn = 1;
+                }
+
             }
 
-            if(turn){
-                turn = 0;
-            } else {
-                turn = 1;
-            }
 
 
 
