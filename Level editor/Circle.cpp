@@ -5,7 +5,6 @@ void Circle::mouseMove( sf::Vector2f mousePosition) {
 
     if (body.getGlobalBounds().contains(mousePosition)){
 
-        std::cout << name << "hey jogne ben je geslected 1?? " << selected << std::endl;
         if (selected){
             move(sf::Vector2f(
                 mousePosition.x - radius,
@@ -24,7 +23,6 @@ void Circle::select(sf::Vector2f mousePosition) {
     deselect();
     if (body.getGlobalBounds().contains(mousePosition)){
         selected = true;
-        std::cout << name << "hey jogne ben je geslected 3?? " << selected << std::endl;
     }
     
 }

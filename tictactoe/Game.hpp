@@ -48,7 +48,7 @@ public:
     void draw(std::vector<Move> & moves, int movesPointer){
 
         int counter = 0;
-        
+        std::string field[] = {"* | * | * ","* | * | *","* | * | * "};
         for (auto item : moves){
 
 
@@ -56,20 +56,21 @@ public:
                 ///
             if(item.player){
                 container[counter].loadTexture("img/circle.png");
-                container[counter].setScale({0.45,0.45});
-                container[counter].move
-                ({
-                    float(item.position.x * (500 / 3) - 70),
-                    float(item.position.y * (500 / 3) - 70)
-                });
-            } else {
-                container[counter].loadTexture("img/cross.png");
-                container[counter].setScale({0.15,0.15});
                 container[counter].move
                 ({
                     float(item.position.x * (500 / 3)),
                     float(item.position.y * (500 / 3))
                 });
+                field[item.position.y][item.position.x * 4] = 'O';
+            } else {
+                container[counter].loadTexture("img/cross.png");
+                container[counter].move
+                ({
+                    float(item.position.x * (500 / 3)),
+                    float(item.position.y * (500 / 3))
+                });
+                container[counter].redo();
+                field[item.position.y][item.position.x * 4] = 'X';
             }
 
             
@@ -79,6 +80,12 @@ public:
             container[counter].draw(window);
             counter++;
         }
+
+        for (auto item : field){
+            std::cout << item << std::endl;
+        }
+        std::cout << "\n\n\n\n\n\n\n\n\n";
+
 
     }
 
@@ -113,7 +120,7 @@ private:
     std::vector<Move> moves;
     int movesPointer = 0;
     ObjectContainer container;
-    bool turn = 0;
+    bool turn = 1;
 
 
 public:
@@ -144,41 +151,33 @@ public:
                 field[0][y] == turn &&
                 field[1][y] == turn &&
                 field[2][y] == turn
-            ){
-                std::cout << "horizontal " << y + 1<< std::endl;
-                return 1; 
-            }
+            )return 1; 
+            
         }
 
         //check vertical
         for(int x = 0; x != 3; x++){
+
             if(
                 field[x][0] == turn &&
                 field[x][1] == turn &&
                 field[x][2] == turn
-            )
-            {
-                std::cout << "vertical " << x + 1<< std::endl;
-                return 1; 
-            }
+            )return 1;
+
         }
 
         //check diagnol 
-        if(  field[0][0] == turn &&
-             field[1][1] == turn &&
-             field[2][2] == turn
-        )   {
-                std::cout << "diagnol 1" << std::endl;
-                return 1; 
-            }
+        if(  
+            field[0][0] == turn &&
+            field[1][1] == turn &&
+            field[2][2] == turn
+        )return 1;
 
-        if(  field[0][2] == turn &&
-             field[1][1] == turn &&
-             field[2][0] == turn
-        ) {
-                std::cout << "diagnol 2" << std::endl;
-                return 1; 
-            }
+        if( 
+            field[0][2] == turn &&
+            field[1][1] == turn &&
+            field[2][0] == turn
+        )return 1;
 
         return 0;
 
@@ -198,8 +197,24 @@ public:
         
         //check horizontal
         if(checkWin2(turn, field)){
-            std::cout << turn << " has won" << std::endl;
-            while(1);          
+            if (turn == 0){
+                Sprite cross;
+                std::cout << "Cross won, Game has ended" << std::endl;    
+                cross.loadTexture("img/cross.png");
+                cross.setScale({3,3});
+                cross.draw(window);
+                
+            } 
+            if (turn == 1){
+                Sprite circle;
+                std::cout << "Circle won, Game has ended" << std::endl;  
+                circle.loadTexture("img/circle.png");
+                circle.setScale({3,3});
+                
+                circle.draw(window);
+            }    
+            window.display();
+            while(1);      
         }
         else if(checkDraw(field)) {
             std::cout << "Draw!" << std::endl;
@@ -221,6 +236,7 @@ public:
     }
 
     void draw(){
+
         window.clear();
         window.draw(background);
         field.draw(window);
@@ -230,18 +246,21 @@ public:
     };
 
     void update(){
+
         if(sf::Keyboard::isKeyPressed(sf::Keyboard::Left)){
+
             if(movesPointer != 0){
+                
                 movesPointer--;
                 moves.pop_back();
 
-                if (moves.back().player){
-                    turn = 0;
-                } else {
-                    turn = 1;
-                }
+                if (moves.back().player){ turn = 0; }
+                else { turn = 1; }
+
                 while(sf::Keyboard::isKeyPressed(sf::Keyboard::Left));
+                
             }
+
         }
     };
 

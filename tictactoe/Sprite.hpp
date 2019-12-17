@@ -53,6 +53,10 @@ public:
 
     void setScale(sf::Vector2f scale) {body.setScale(scale); }
 
+    void redo() {   
+
+        
+    }
 
 };
 
