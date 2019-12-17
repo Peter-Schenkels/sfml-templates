@@ -1,6 +1,3 @@
-
-# pragma once
-
 #ifndef OBJECT_CONTAINER_HPP
 #define OBJECT_CONTAINER_HPP
 
@@ -31,16 +28,13 @@ public:
 
     ObjectContainer(){};
 
+    void addCircle(sf::Vector2f position, float radius, std::string name, sf::Color color );
 
-    void addObject
-    ( 
-        std::string type,
-        sf::Vector2f size,
-        sf::Vector2f position,
-        std::string name,
-        sf::Color color,
-        std::string fileLocation
-    );
+    void addRectangle(sf::Vector2f position, sf::Vector2f size, std::string name, sf::Color color );
+
+    void addSprite(sf::Vector2f position, sf::Vector2f size, std::string name, sf::Color color, std::string imgLocation);
+
+    void addLine(sf::Vector2f position, sf::Vector2f size, std::string name, sf::Color color);
 
     void update();
 

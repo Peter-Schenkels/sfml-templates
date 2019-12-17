@@ -56,6 +56,7 @@ public:
     int get(const char character){      
         if (character < 123)
             return characters[character];
+        return -1;
     }
 
 };

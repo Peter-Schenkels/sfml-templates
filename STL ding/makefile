@@ -1,9 +1,17 @@
 
 
+STL: STL.hpp main.cpp
+	g++ -c STL.hpp main.cpp
 
 
 
-main: main.cpp STL.hpp
+
+
+
+program: main.o 
+	g++ -o main main.o 
+
+run: 
 	./main
 
 clean: *.o

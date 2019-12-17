@@ -1,46 +1,32 @@
 #include "ObjectContainer.hpp"
 
 
-void ObjectContainer::addObject
-( 
-    std::string type,
-    sf::Vector2f size,
-    sf::Vector2f position,
-    std::string name,
-    sf::Color color,
-    std::string fileLocation
+void ObjectContainer::addCircle(sf::Vector2f position, float radius, std::string name, sf::Color color ){
+    
+    container[containerPointer] = new Circle(radius, position, name, color);
+    containerPointer++;
+}
 
-)
-{
-    try {   
-        
-        if (type == "Rectangle"){
-            container[containerPointer] = new Rectangle(size, position, name, color);
-            containerPointer++;
-        } 
-        else if (type == "Circle"){
-            container[containerPointer] = new Circle(size.x, position, name, color);
-            containerPointer++;
-        }
-        else if (type == "Sprite"){
-            container[containerPointer] = new Sprite(position, fileLocation, size, name, color);
-            containerPointer++;
-        }
-        else if (type == "Line"){
-            container[containerPointer] = new Line(position, size, name, color);
-            containerPointer++;
-        }
-        else {
-            throw(type);
-        }
+void ObjectContainer::addRectangle(sf::Vector2f position, sf::Vector2f size, std::string name, sf::Color color ){
 
-    }
-    catch(std::string type){
-        std::cout << "error unable to recognise type: \"" << type << "\"" << std::endl;
-    }
+    container[containerPointer] = new Rectangle(size, position, name, color);
+    containerPointer++;
 
 }
 
+void ObjectContainer::addSprite(sf::Vector2f position, sf::Vector2f size, std::string name, sf::Color color, std::string imgLocation){
+
+    container[containerPointer] = new Sprite(position, imgLocation, size, name, color);
+    containerPointer++;
+
+}
+
+void ObjectContainer::addLine(sf::Vector2f position, sf::Vector2f size, std::string name, sf::Color color){
+    
+    container[containerPointer] = new Line(position, size, name, color);
+    containerPointer++;
+
+}
 
 void ObjectContainer::update(){
 
@@ -139,6 +125,6 @@ std::string ObjectContainer::exportString(){
 
     }
 
-    return exportString += "0";
+    return exportString;
     
 }
