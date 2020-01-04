@@ -1,36 +1,63 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <memory>
+#include <cstring>
 
 
 
 
+class bird{
+    std::string name;
 
-
-
-
-
-int main(){
-
-    std::string ding = "ohoho\nahahaha\nnenenee e ";
-    std::string buffer = "";
-    std::vector<std::string> Lines;
-
-    for (auto character : ding){
-        if (character == '\n'){
-            Lines.push_back(buffer);
-            buffer = "";
-        } else {
-            buffer += character;
-        }
-        
+public:
+    bird(std::string name):
+        name(name)
+    {
+        std::cout << "there we fliegt " << name << std::endl;
     }
-    Lines.push_back(buffer);
-    buffer = "";
-
-    for (auto line : Lines){
-        std::cout << line << std::endl;
+    ~bird(){
+        std::cout << "there goes " << name << std::endl;
     }
+
+    void nothing(){};
+};
+
+template <typename T>
+class deleter{
+    T * body;
+
+public:
+    deleter(T * body):
+        body(body)
+    {}
+
+    ~deleter(){
+        delete body;
+    }
+
+    T *operator*() const{
+        return * body;
+    }
+
+    T *operator->() const{
+        return body;
+    }
+};
+
+
+
+
+
+
+
+int main()
+{
+    bird jekrel = bird("jerkel");
+    auto kinkel = std::make_unique<bird>("kinkel");
+    jekrel.nothing();
+    kinkel->nothing();
+    kinkel.reset(new bird("jerke"));
 
 
 
