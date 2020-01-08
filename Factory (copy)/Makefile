@@ -9,12 +9,12 @@
 #############################################################################
 
 # source files in this project (main.cpp is automatically assumed)
-SOURCES := rectangle.cpp sprite.cpp circle.cpp object.cpp
+SOURCES := rectangle.cpp sprite.cpp circle.cpp object.cpp hitbox.cpp
 # header files in this project
-HEADERS := json.hpp jsonsfml.hpp factory.hpp object.hpp rectangle.hpp circle.hpp sprite.hpp background_tile.hpp
+HEADERS := json.hpp jsonsfml.hpp factory.hpp object.hpp rectangle.hpp circle.hpp sprite.hpp background_tile.hpp game.hpp player.hpp hitbox.hpp
 
 # other places to look for files for this project
-SEARCH  := 
+SEARCH  := objects . engine factory
 
 # set REATIVE to the next higher directory 
 # and defer to the Makefile.due there

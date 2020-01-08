@@ -19,10 +19,11 @@ using namespace nlohmann;
 ///\details
 /// Class that acts following the factory pattern and reads json files
 class Factory{
-
+    bool edit_mode = true;
     std::vector<std::unique_ptr<Object>> container;
     json parsed;
     std::string filelocation;
+    int size = 0;
 
 public:
     ///\brief
@@ -47,6 +48,7 @@ public:
                         json_to_color(object["color"])
                     )
                 ));
+                size++;
             }
             else if (object["type"] == "Rectangle"){
                 container.push_back(std::unique_ptr<Rectangle>(
@@ -56,19 +58,26 @@ public:
                         json_to_color(object["color"]))
                     )
                 );
+                size++;
             }
             else if (object["type"] == "Sprite"){
                 container.push_back(std::unique_ptr<Sprite>(
                     new Sprite(
                         json_to_vector2f(object["position"]), 
                         json_to_vector2f(object["factor"]), 
-                        object["location"])
+                        object["location"],
+                        "factory sprite")
                     )
                 );
+                size++;
             } else {
                 std::cout << "Unknown object type: " << object["type"] << std::endl;
             }
         }
+    }
+
+    void toggle_mode(){
+        edit_mode = !edit_mode;
     }
 
     ///\brief
@@ -82,8 +91,10 @@ public:
     ///\brief
     /// calls the select function on all the objects in the array
     void select(sf::Event event){
-        for (auto & object : container){
-            object->select(event);
+        if (edit_mode){
+            for (auto & object : container){
+                object->select(event);
+            }
         }
     }
 
@@ -95,7 +106,15 @@ public:
         }
     }
 
-
+    Object* get_object(int index){
+        if(index < size ){
+            return container[index].get();
+        } else {
+            std::cerr << "out of bound factory allocation" << std::endl;
+            Object * none = new Circle({0,0}, 0, sf::Color::White);
+            return none;
+        }
+    }
 
     void save(){
         

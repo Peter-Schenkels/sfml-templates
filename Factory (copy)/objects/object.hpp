@@ -8,6 +8,7 @@
 #include <SFML/Graphics.hpp>
 #include "json.hpp"
 #include "jsonsfml.hpp"
+#include "hitbox.hpp"
 #include <iostream>
 
 using namespace nlohmann;
@@ -25,6 +26,8 @@ protected:
     sf::Vector2f position; 
     sf::Vector2f size;
     bool selected = false;
+    hitbox collision_box;
+    std::string id;
 
 public:
 
@@ -47,6 +50,8 @@ public:
     bool get_selected(){ return selected; };
 
     void select(sf::Event event);
+    
+    virtual void collision(Object*object){ collision_box.update(position); }
 
     virtual json export_to_json(json object) = 0;
 

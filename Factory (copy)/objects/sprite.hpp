@@ -7,7 +7,7 @@
 
 #include <SFML/Graphics.hpp>
 #include "object.hpp"
-
+#include <string>
 using namespace nlohmann;
 
 ///\brief 
@@ -17,6 +17,7 @@ class Sprite : public Object{
     sf::Texture texture;
     sf::Sprite body;
     sf::RectangleShape fake;
+    std::string ID;
 
 
 public:
@@ -26,9 +27,11 @@ public:
     Sprite(
         sf::Vector2f i_position,
         sf::Vector2f size_factor,
-        std::string img_location
+        std::string img_location,
+        std::string ID
     ):
         Object({0,0}, {0,0}),
+        ID(ID),
         size_factor(size_factor),
         img_location(img_location)
     {
@@ -51,6 +54,8 @@ public:
     void draw(sf::RenderWindow & window) override ;
 
     void set_sprite_size(sf::Vector2f new_size);
+
+    std::string get_id(){ return ID; }
 
     json export_to_json(json object) override;
 
