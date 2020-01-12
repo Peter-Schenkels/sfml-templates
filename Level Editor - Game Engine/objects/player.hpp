@@ -18,8 +18,11 @@ private:
     bool on_ground = false;
 
 public:
-    Player(sf::Vector2f position, sf::Vector2f size) : Object(position, size)
+    Player(sf::Vector2f position, sf::Vector2f size) : 
+        Object(position, size)
+ 
     {
+
     }
 
     Player(sf::Vector2f position, sf::Vector2f size, Sprite *sprite) : Object(position, size)
@@ -37,7 +40,6 @@ public:
     void draw(sf::RenderWindow &window)
     {
         body->draw(window);
-        collision_box.draw(window);
     }
 
     void update()
@@ -61,23 +63,23 @@ public:
     //handles all input events
     void input(sf::Event event){
         //if key up is pressed: jump!
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Up) && on_ground){
-            speed.y = -20;
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Space) && speed.y == -0.5){
+            speed.y = -20.01;
         } 
         //if key left is pressed: move left!
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Left)){
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::A)){
             speed.x = -7;
         } else if (speed.x < 0) {
-            speed.x += 5;
+            speed.x += 7;
             if (speed.x > 0){
                 speed.x = 0;
             }
         }
         //if key right is pressed: move right!
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Right)){
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::D)){
             speed.x = 7;
         } else if (speed.x > 0) {
-            speed.x -= 5;
+            speed.x -= 7;
             if (speed.x < 0){
                 speed.x = 0;
             }
@@ -87,28 +89,30 @@ public:
     //collision detection between a player and a sf::FloatRect
     void collision(sf::FloatRect rect) override
     {
+        //check if a sf::FloatRect collides with the right  or left side of the hitbox
+        if (collision_box.leftSideIntersect(rect))
+        {
+            speed.x = 0;
+            position.x = rect.left + rect.width;
+
+        }
+        else if (collision_box.rightSideIntersect(rect))
+        {
+            speed.x = 0;
+            position.x = rect.left - size.x;
+
+        }
         //check if a sf::FloatRect collides with the bottom  or top of the hitbox
-        if (collision_box.bottomSideIntersect(rect) or
+        else if (collision_box.bottomSideIntersect(rect) or
             collision_box.topSideIntersect(rect))
         {
-            position.y -= speed.y;
-            speed.y= 0;
+            position.y = rect.top - size.y;
+            speed.y = -0.5;
             on_ground = true;
         } else {
             on_ground = false;
         }
 
-        //check if a sf::FloatRect collides with the right  or left side of the hitbox
-        if (collision_box.leftSideIntersect(rect))
-        {
-            speed.x = 0;
-            position.x -= speed.x;
-        }
-        if (collision_box.rightSideIntersect(rect))
-        {
-            speed.x = 0;
-            position.x -= speed.x;
-        }
     }
 
     json export_to_json(json object) { return ""; }

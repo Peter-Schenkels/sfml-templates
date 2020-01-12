@@ -61,6 +61,7 @@ private:
 public:
 
     void get_input(){
+        
 
         while (window.pollEvent(event))
         {
@@ -71,6 +72,8 @@ public:
                 factory.save();
                 window.close();
             }
+            
+
         }
 
     }
@@ -80,7 +83,8 @@ public:
         player.update();
 
         
-        player.collision(factory.get_object(4)->get_boundaries()); 
+        player.collision(factory.get_object(0)->get_boundaries()); 
+        player.collision(factory.get_object(1)->get_boundaries()); 
         
 
 

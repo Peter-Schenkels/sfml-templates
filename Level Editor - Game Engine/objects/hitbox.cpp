@@ -4,16 +4,16 @@
 hitbox::hitbox(sf::Vector2f position, sf::Vector2f size):
 		position(position),
 		size(size),
-		left(sf::Vector2f{0.1, size.y}),
-		right{sf::Vector2f{0.1, size.y}},
-		top({size.x, 0.1}),
-		bottom({size.x, 0.1}),
+		left(sf::Vector2f{0, size.y-5}),
+		right{sf::Vector2f{0, size.y-5}},
+		top({size.x - 2, 0}),
+		bottom({size.x - 2, 0}),
 		box(size)
 	{
 		left.setPosition(position);
-		right.setPosition({position.x+ size.x, position.y});
+		right.setPosition({position.x + 1 + size.x, position.y});
 		top.setPosition(position);
-		bottom.setPosition({position.x, position.y + size.y});
+		bottom.setPosition({position.x + 1, position.y + size.y});
 		box.setPosition(position);
 
 		left.setOutlineThickness(1.f);
