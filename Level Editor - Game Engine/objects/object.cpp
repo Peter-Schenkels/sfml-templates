@@ -6,8 +6,8 @@
 
 
 Object::Object(sf::Vector2f position, sf::Vector2f size) : position(position),
-                                                           size(size),
-                                                           collision_box(position, size) 
+                                                           size(size)
+                                                           
                                                            {}
 
 sf::FloatRect Object::get_boundaries() {

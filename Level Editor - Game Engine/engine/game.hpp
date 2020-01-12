@@ -25,7 +25,8 @@ public:
     Game():
         window({WINDOW_SIZE_X, WINDOW_SIZE_Y}, "window"), 
         factory("factory/save.json"),
-        player({100,100}, {200,200})
+        ///Player start position, player size
+        player({100,100}, {50,50})
 
     
     {

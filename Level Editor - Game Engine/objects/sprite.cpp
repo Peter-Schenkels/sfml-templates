@@ -29,7 +29,6 @@ void Sprite::set_texture(sf::Texture& img) {
 }
 
 void Sprite::update() {
-    collision_box.update(position);
     body.setPosition(position);
     fake.setPosition(position);
     if (selected) {

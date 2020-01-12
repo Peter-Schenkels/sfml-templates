@@ -12,6 +12,7 @@ class Player : public Object
 private:
     sf::Vector2f speed = {0, 0};
     Sprite *body;
+    Player_Hitbox collision_box;
     float gravity = 0.5;
     float resistance = 2;
     bool floating = false;
@@ -19,13 +20,16 @@ private:
 
 public:
     Player(sf::Vector2f position, sf::Vector2f size) : 
-        Object(position, size)
+        Object(position, size),
+        collision_box(position, size) 
  
     {
 
     }
 
-    Player(sf::Vector2f position, sf::Vector2f size, Sprite *sprite) : Object(position, size)
+    Player(sf::Vector2f position, sf::Vector2f size, Sprite *sprite) : 
+        Object(position, size),
+        collision_box(position, size) 
     {
         init(sprite);
     }
@@ -40,6 +44,7 @@ public:
     void draw(sf::RenderWindow &window)
     {
         body->draw(window);
+        collision_box.draw(window);
     }
 
     void update()
@@ -87,7 +92,7 @@ public:
     }
 
     //collision detection between a player and a sf::FloatRect
-    void collision(sf::FloatRect rect) override
+    void collision(sf::FloatRect rect)
     {
         //check if a sf::FloatRect collides with the right  or left side of the hitbox
         if (collision_box.leftSideIntersect(rect))

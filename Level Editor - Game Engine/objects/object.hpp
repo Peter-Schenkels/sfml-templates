@@ -26,7 +26,7 @@ protected:
     sf::Vector2f position; 
     sf::Vector2f size;
     bool selected = false;
-    hitbox collision_box;
+
     std::string id;
 
 public:
@@ -51,10 +51,12 @@ public:
 
     void select(sf::Event event);
     
-    virtual void collision(sf::FloatRect rect){ collision_box.update(position); }
+
 
     virtual json export_to_json(json object) = 0;
 
 };
+
+
 
 #endif //SFML_TEMPLATES_OBJECT_HPP
