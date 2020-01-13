@@ -1,7 +1,7 @@
 #ifndef SETTINGS_HPP
 #define SETTINGS_HPP
 
-#define WINDOW_SIZE_X 1000
+#define WINDOW_SIZE_X 1500
 #define WINDOW_SIZE_Y 1000
 
 

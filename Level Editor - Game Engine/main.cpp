@@ -3,5 +3,9 @@
 
 int main() {
     Game game;
-    game.main();
+    for(;;){
+        game.get_input();
+        game.update();
+        game.draw();
+    }
 }

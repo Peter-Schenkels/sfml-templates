@@ -44,7 +44,6 @@ public:
     void draw(sf::RenderWindow &window)
     {
         body->draw(window);
-        collision_box.draw(window);
     }
 
     void update()
@@ -92,26 +91,26 @@ public:
     }
 
     //collision detection between a player and a sf::FloatRect
-    void collision(sf::FloatRect rect)
+    void collision(Object* object)
     {
         //check if a sf::FloatRect collides with the right  or left side of the hitbox
-        if (collision_box.leftSideIntersect(rect))
+        if (collision_box.leftSideIntersect(object->get_boundaries()))
         {
-            speed.x = 0;
-            position.x = rect.left + rect.width;
+            speed.x = -0.5;
+            position.x = object->get_boundaries().left + object->get_boundaries().width;
 
         }
-        else if (collision_box.rightSideIntersect(rect))
+        else if (collision_box.rightSideIntersect(object->get_boundaries()))
         {
-            speed.x = 0;
-            position.x = rect.left - size.x;
+            speed.x = -0;
+            position.x = object->get_boundaries().left - size.x;
 
         }
         //check if a sf::FloatRect collides with the bottom  or top of the hitbox
-        else if (collision_box.bottomSideIntersect(rect) or
-            collision_box.topSideIntersect(rect))
+        else if (collision_box.bottomSideIntersect(object->get_boundaries()) or
+            collision_box.topSideIntersect(object->get_boundaries()))
         {
-            position.y = rect.top - size.y;
+            position.y = object->get_boundaries().top - size.y;
             speed.y = -0.5;
             on_ground = true;
         } else {

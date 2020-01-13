@@ -10,7 +10,8 @@
 void Rectangle::update() {
     body.setPosition(position);
     body.setFillColor(color);
-    if (selected){
+    
+    if (selected) {
         body.setOutlineThickness(2);
     } else {
         body.setOutlineThickness(0);

@@ -73,27 +73,23 @@ public:
                 factory.save();
                 window.close();
             }
-            
-
         }
 
     }
 
     void update(){
+
         factory.update();
         player.update();
-
+        player.collision(factory.get_object(0)); 
+        player.collision(factory.get_object(1)); 
         
-        player.collision(factory.get_object(0)->get_boundaries()); 
-        player.collision(factory.get_object(1)->get_boundaries()); 
-        
-
-
     }
 
     void draw(){
+
         window.clear();
-        // background.draw(window);
+        background.draw(window);
         player.draw(window);
 
         factory.draw(window);
@@ -101,15 +97,6 @@ public:
 
     }
 
-    void main(){
-        for(;;){
-
-            get_input();
-            update();
-            draw();
-
-        }
-    }
 
 
 
