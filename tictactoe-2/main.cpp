@@ -1,7 +1,8 @@
-#include <SFML/Graphics.hpp>
 #include <iostream>
 #include "tictactoe.hpp"
 
+#ifndef TARGET_ARDUINO
+#include "tictactoe_gui.hpp"
 
 int main(){
     sf::RenderWindow window{ sf::VideoMode{ 100, 100 }, "SFML window" };
@@ -20,3 +21,4 @@ int main(){
         game.update();
     };
 }
+#endif

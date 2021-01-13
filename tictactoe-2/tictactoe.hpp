@@ -3,6 +3,7 @@
 
 #include <stdint.h>
 #include <iostream>
+#include <array>
 
 enum class TicTacToeEntities : char
 {
@@ -32,7 +33,7 @@ public:
     TicTacToeEntities board[3][3];
 
     Board();
-    void fill(Command * commands, uint8_t array_pointer);
+    void fill(std::array<Command, 9> commands, uint8_t array_pointer);
     void draw();
 };
 
@@ -41,17 +42,20 @@ class TicTacToe
 private:
 
     TicTacToeEntities turn = TicTacToeEntities::player_1;
-    Command commands[9];
+    std::array<Command, 9> commands;
     unsigned int array_pointer = 0;
 
 public:
-
+    // Default constructor
     TicTacToe() = default;
     // Updates the game for one full round
     void update();
     // Returns the board
     Board get_board();
-
+    // Add and checks wether the given position already exist and adds it to commands 
+    bool add_to_commands(Command command);
+    // Undoos a turn
+    void execute_undo();
 
 private:
 
@@ -61,12 +65,8 @@ private:
     void switch_turn();
     // Checks wether the command is valid
     void check_command();
-    // Undoos a turn
-    void execute_undo();
     // Prompts the player for a turn
     int * prompt_position();
-    // Add and checks wether the given position already exist and adds it to commands 
-    bool add_to_commands(Command command);
     // Executes a command
     void execute_turn(); 
     // Checks wether the given command's position already exist in the commands array

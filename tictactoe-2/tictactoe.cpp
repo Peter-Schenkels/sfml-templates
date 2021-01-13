@@ -25,7 +25,7 @@ Board::Board()
     }
 }
 
-void Board::fill(Command * commands, uint8_t array_pointer)
+void Board::fill(std::array<Command, 9> commands, uint8_t array_pointer)
 {
     for(uint8_t index = 0; index < array_pointer; index++)
     {
@@ -213,7 +213,12 @@ TicTacToeEntities TicTacToe::check_win()
         TicTacToeEntities player = board.board[0][0];
         if(player != TicTacToeEntities::empty)  
         {
-            if(board.board[0][0] == player && board.board[1][1] == player && board.board[2][2] == player)
+            if
+            (
+                (board.board[0][0] == player && 
+                board.board[1][1] == player && 
+                board.board[2][2] == player) 
+            )
             {
                 return player;
             }
@@ -222,7 +227,12 @@ TicTacToeEntities TicTacToe::check_win()
         player = board.board[2][0];
         if(player != TicTacToeEntities::empty)  
         {            
-            if(board.board[2][0] == player && board.board[1][1] == player && board.board[0][2] == player)
+            if
+            (      
+                (board.board[2][0] == player && 
+                board.board[1][1] == player && 
+                board.board[0][2] == player)
+            )
             {
                 return player;
             }
