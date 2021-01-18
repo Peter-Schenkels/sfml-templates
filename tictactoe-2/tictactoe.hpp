@@ -4,61 +4,57 @@
 #include <stdint.h>
 #include <iostream>
 #include <array>
+#include <SFML/Graphics.hpp>
+#include "command.hpp"
+#include "board.hpp"
+#include "entities.hpp"
 
-enum class TicTacToeEntities : char
+#define GRID_SIZE 100
+
+
+enum class GameType
 {
-    empty = '-',
-    player_1 = 'x',
-    player_2 = 'O'
+    gui,
+    cli
 };
 
-class Command
-{
-public:
-
-    TicTacToeEntities turn;
-    uint8_t position_x;
-    uint8_t position_y;
-
-    Command() = default;
-    Command( TicTacToeEntities u_turn, uint8_t u_position_x, uint8_t u_position_y);
-    bool operator== ( const Command& rhs);
-};
-
-
-class Board
-{
-public:
-
-    TicTacToeEntities board[3][3];
-
-    Board();
-    void fill(std::array<Command, 9> commands, uint8_t array_pointer);
-    void draw();
-};
 
 class TicTacToe
 {
 private:
 
     TicTacToeEntities turn = TicTacToeEntities::player_1;
+    GameType game_type = GameType::cli;
     std::array<Command, 9> commands;
     unsigned int array_pointer = 0;
+
+    sf::Texture cross;
+    sf::Texture circle;
+    sf::RectangleShape grid_cell;
+
+    bool mouse_press = false;
 
 public:
     // Default constructor
     TicTacToe() = default;
     // Updates the game for one full round
     void update();
+    // Updates the game and draws the current game and listens for input
+    void update(sf::Event event, sf::RenderWindow & window);
     // Returns the board
     Board get_board();
     // Add and checks wether the given position already exist and adds it to commands 
     bool add_to_commands(Command command);
     // Undoos a turn
     void execute_undo();
+    // Set's gui or cli
+    void set_game_type(GameType type);
+    // Draws the field in the window
+    void draw(sf::RenderWindow & window);
 
 private:
-
+    // Get mouse and keyboard input
+    Command * get_input(sf::Event event, sf::RenderWindow & window);
     // Draws the field in the commandline
     void draw();
     // Switches player turn
@@ -75,4 +71,5 @@ private:
     TicTacToeEntities check_win();
     // Resets the commands
     void reset();
+
 };

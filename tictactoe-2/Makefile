@@ -9,9 +9,9 @@
 #############################################################################
 
 # source files in this project (main.cpp is automatically assumed)
-SOURCES := tictactoe.cpp
+SOURCES := tictactoe.cpp command.cpp board.cpp
 # header files in this project
-HEADERS := tictactoe.hpp
+HEADERS := tictactoe.hpp entities.hpp command.hpp board.hpp
 
 # other places to look for files for this project
 SEARCH  := 

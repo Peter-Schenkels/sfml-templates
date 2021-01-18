@@ -1,51 +1,89 @@
 #include "tictactoe.hpp"
 
-
-Command::Command( TicTacToeEntities u_turn, uint8_t u_position_x, uint8_t u_position_y)
+Command * TicTacToe::get_input(sf::Event event, sf::RenderWindow & window)
 {
-    turn = u_turn;
-    position_x = u_position_x;
-    position_y = u_position_y;    
+    Command * command = nullptr;
+
+    if(event.type == sf::Event::MouseButtonPressed)
+    {
+        if(event.mouseButton.button == sf::Mouse::Button::Left)
+        {
+            sf::Vector2i position = sf::Mouse::getPosition(window);
+            command = new Command(turn, int(position.x/GRID_SIZE), int(position.y/GRID_SIZE));
+            mouse_press = true;
+        }
+        else if(event.mouseButton.button == sf::Mouse::Button::Right)
+        {
+            std::cout << "Undo." << std::endl;
+            execute_undo();
+            switch_turn();
+            mouse_press = true;
+        }
+    }
+    return command;
 }
 
-bool Command::operator== ( const Command& rhs)
-{ 
-    return (position_x == rhs.position_x && position_y == rhs.position_y);
+void TicTacToe::update(sf::Event event, sf::RenderWindow & window)
+{
+    if(!mouse_press)
+    {
+        Command * input = get_input(event, window);
+        if(input != NULL)
+        {
+            if(add_to_commands(*input))
+            {
+                switch_turn();
+            }
+        }
+        auto win = check_win();
+        if(win != TicTacToeEntities::empty){
+            std::cout << "Player: " << static_cast<char>(win) << " has won the match!" << std::endl;
+            reset();
+            return;
+        }
+        else if(win == TicTacToeEntities::empty && array_pointer >= 8)
+        {
+            std::cout << "It's a draw!" << std::endl;
+            reset();
+            return;
+        }
+    }
+    else
+    {
+        if(event.type == sf::Event::MouseButtonReleased)
+        {
+            mouse_press = false;
+        }
+    }
 }
 
-
-Board::Board()
+void TicTacToe::draw(sf::RenderWindow & window)
 {
     for(unsigned int x = 0; x < 3; x++)
     {
         for(unsigned int y = 0; y < 3; y++)
         {
-            board[x][y] = TicTacToeEntities::empty;
+            grid_cell.setPosition({float(x*GRID_SIZE), float(y*GRID_SIZE)});
+            window.draw(grid_cell);
         }
     }
-}
 
-void Board::fill(std::array<Command, 9> commands, uint8_t array_pointer)
-{
-    for(uint8_t index = 0; index < array_pointer; index++)
+    for (unsigned int i = 0; i < array_pointer; i++)
     {
-        board[commands[index].position_x][commands[index].position_y] = commands[index].turn;
-    }
-}
-
-void Board::draw()
-{
-    int pointer = 0;
-    for(uint8_t y = 0; y < 3; y++ )
-    {
-        for(uint8_t x = 0; x < 3; x++)
+        sf::Sprite sprite;
+        if(commands[i].turn == TicTacToeEntities::player_1)
         {
-            std::cout << static_cast<char>(board[x][y]) << " ";
-            pointer++;
+            sprite.setTexture(cross);
         }
-        std::cout << std::endl;
+        else if(commands[i].turn == TicTacToeEntities::player_2)
+        {
+            sprite.setTexture(circle);
+        }
+        sprite.setPosition({float(commands[i].position_x * GRID_SIZE), float(commands[i].position_y * GRID_SIZE)});
+        window.draw(sprite);
     }
 }
+
 
 void TicTacToe::update()
 {
@@ -248,3 +286,17 @@ void TicTacToe::reset()
     turn = TicTacToeEntities::player_1;
 }
 
+
+void TicTacToe::set_game_type(GameType type)
+{
+    game_type = type;
+    if(type == GameType::gui)
+    {
+        cross.loadFromFile("textures/kruis.png");
+        circle.loadFromFile("textures/pokemon_ball.png");
+        grid_cell.setSize({GRID_SIZE, GRID_SIZE});
+        grid_cell.setOutlineThickness(2);
+        grid_cell.setFillColor(sf::Color::Blue);
+        grid_cell.setOutlineColor(sf::Color::Black);
+    }
+}
