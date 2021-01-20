@@ -41,7 +41,7 @@ void TicTacToe::update(sf::Event event, sf::RenderWindow & window)
             reset();
             return;
         }
-        else if(win == TicTacToeEntities::empty && array_pointer >= 8)
+        else if(win == TicTacToeEntities::empty && array_pointer > 8)
         {
             std::cout << "It's a draw!" << std::endl;
             reset();
@@ -94,7 +94,7 @@ void TicTacToe::update()
         reset();
         return;
     }
-    else if(win == TicTacToeEntities::empty && array_pointer >= 8)
+    else if(win == TicTacToeEntities::empty && array_pointer > 8)
     {
         std::cout << "It's a draw!" << std::endl;
         reset();
